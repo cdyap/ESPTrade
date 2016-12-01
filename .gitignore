@@ -13,3 +13,7 @@ hs_err_pid*
 bin/db.properties
 
 config/db.properties
+
+.DS_Store
+
+.DS_Store
