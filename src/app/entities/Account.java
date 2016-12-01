@@ -10,22 +10,32 @@ import javax.persistence.Id;
 public class Account 
 {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column
-	private Long id;
+	private Long idNumber;
 	
 	@Column
 	private String name;
 	
 	@Column
 	private String sex;
+	
+	@Column
+	private String password;
 
-	public Long getId() {
-		return id;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Long getIdNumber() {
+		return idNumber;
+	}
+
+	public void setIdNumber(Long id) {
+		this.idNumber = id;
 	}
 
 	public String getName() {

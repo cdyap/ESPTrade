@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import app.entities.Account;
 import app.entities.Clothes;
 import app.entities.Item;
 import app.entities.Shoes;
@@ -123,7 +124,7 @@ public class MovieRest {
 								@Field("secret_key") String secret_key);
 	}
 	
-	@GET
+	@POST
 	@Path("/sellItem")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -144,7 +145,7 @@ public class MovieRest {
 		return map;
 	}
 	
-	@GET
+	@POST
 	@Path("/sellClothes")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -171,7 +172,7 @@ public class MovieRest {
 		return map;
 	}
 	
-	@GET
+	@POST
 	@Path("/sellShoes")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -198,7 +199,7 @@ public class MovieRest {
 		return map;
 	}
 	
-	@GET
+	@POST
 	@Path("/buy")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -223,6 +224,71 @@ public class MovieRest {
 		soldItemRep.save(soldItem);
 		
 		map.put("message", "Transaction successful! Your shoes have been posted.");
+		return map;
+	}
+	
+	@POST
+	@Path("/signup")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashMap<String, String> signup(@QueryParam("idNumber") Long idNumber,
+										@QueryParam("name") String name,
+										@QueryParam("password") String password,
+										@QueryParam("sex") String sex) throws IOException
+	{
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		Account newAccount = new Account();
+		
+		
+		//find existing account
+		if (accountRep.findOne(idNumber) == null)
+		{
+			newAccount.setIdNumber(idNumber);
+			newAccount.setName(name);
+			newAccount.setPassword(password);
+			newAccount.setSex(sex);
+			accountRep.save(newAccount);
+			map.put("message", "Login successful!");
+		}
+		else {
+			map.put("message", "Account exists!");
+		}
+		
+		
+		return map;
+	}
+	
+	@GET
+	@Path("/login")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashMap<String, Object> login(@QueryParam("idNumber") Long idNumber,
+										@QueryParam("password") String password) throws IOException
+	{
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		Account findAccount = new Account();
+		
+		findAccount = accountRep.findOne(idNumber);
+		
+		//find existing account
+		if (findAccount == null)
+		{
+			map.put("message", "Account not found!");
+		}
+		else {
+			if (findAccount.getPassword() == password) {
+				map.put("message", "Login successful!");
+				map.put("login", true);
+			}
+			else {
+				map.put("message", "Wrong password!");
+				map.put("login", false);
+			}
+		}
+		
+		
 		return map;
 	}
 	
