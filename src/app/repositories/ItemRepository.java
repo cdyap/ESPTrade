@@ -22,4 +22,9 @@ public interface ItemRepository extends JpaRepository<Item, Long>
 //	List<Movie> findByGross();
 	
 	Item findByName(String name);
+	
+	@Modifying
+	@Transactional
+	@Query("delete from Item i where i.id = ?1")
+	void deleteItembyID(Long id);
 }

@@ -22,4 +22,9 @@ public interface LostItemRepository extends JpaRepository<LostItem, Long>
 //	List<Movie> findByGross();
 	
 	LostItem findByName(String name);
+	
+	@Modifying
+	@Transactional
+	@Query("delete from LostItem l where l.id = ?1")
+	void deleteLostItembyID(Long id);
 }

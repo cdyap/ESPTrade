@@ -22,4 +22,9 @@ public interface ClothesRepository extends JpaRepository<Clothes, Long>
 //	List<Movie> findByGross();
 	
 	Clothes findByName(String name);
+	
+	@Modifying
+	@Transactional
+	@Query("delete from Clothes c where c.id = ?1")
+	void deleteClothesbyID(Long id);
 }

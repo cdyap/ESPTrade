@@ -211,6 +211,7 @@ public class MovieRest {
 		
 		LostItem newLostItem = new LostItem();
 		
+		//save new lost item
 		newLostItem.setName(name);
 		newLostItem.setLocationFound(locationFound);
 		newLostItem.setFound(false);
@@ -218,6 +219,30 @@ public class MovieRest {
 		lostItemRep.save(newLostItem);
 		
 		map.put("message", "Transaction successful! Your lost item has been posted.");
+		return map;
+	}
+	
+	@POST
+	@Path("/foundLostItem")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashMap<String, String> foundLostItem(@QueryParam("id") Long id) throws IOException
+	{
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		LostItem lostItem = new LostItem();
+		
+		//find lost item
+		lostItem = lostItemRep.findOne(id);
+		
+		if (lostItem == null ) {
+			map.put("message", "Item not found.");
+		} else {
+			lostItem.setFound(true);
+			lostItemRep.save(lostItem);
+			map.put("message", "Item found!");
+		}
+		
 		return map;
 	}
 	
