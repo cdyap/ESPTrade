@@ -25,5 +25,9 @@ public interface AccountRepository extends JpaRepository<Account, Long>
 	
 	Account findOne(Long id);
 	
+//	@Modifying
+//	@Transactional
+//	@Query("delete from Account i where i.id = ?1")
+//	void deleteAccountbyID(Long id);
    
 }

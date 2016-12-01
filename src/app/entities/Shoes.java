@@ -63,7 +63,7 @@ public class Shoes
 	private String color;
 	
 	@Column
-	private String size;
+	private Integer size;
 	
 
 	
@@ -83,11 +83,11 @@ public class Shoes
 		this.color = color;
 	}
 
-	public String getSize() {
+	public Integer getSize() {
 		return size;
 	}
 
-	public void setSize(String size) {
+	public void setSize(Integer size) {
 		this.size = size;
 	}
 	
