@@ -21,5 +21,5 @@ public interface SoldItemRepository extends JpaRepository<SoldItem, Long>
 //	@Query("SELECT m FROM Movie m ORDER BY m.gross DESC LIMIT 10")
 //	List<Movie> findByGross();
 	
-	SoldItem findByName(String name);
+	//SoldItem findByName(String name);
 }
