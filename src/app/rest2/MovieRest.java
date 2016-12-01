@@ -25,6 +25,7 @@ import com.google.gson.GsonBuilder;
 import app.entities.Account;
 import app.entities.Clothes;
 import app.entities.Item;
+import app.entities.LostItem;
 import app.entities.Shoes;
 import app.entities.SoldItem;
 import app.repositories.AccountRepository;
@@ -196,6 +197,27 @@ public class MovieRest {
 		shoesRep.save(newShoes);
 		
 		map.put("message", "Transaction successful! Your shoes have been posted.");
+		return map;
+	}
+	
+	@POST
+	@Path("/newLostItem")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashMap<String, String> newLostItem(@QueryParam("name") String name,
+										@QueryParam("locationFound") String locationFound) throws IOException
+	{
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		LostItem newLostItem = new LostItem();
+		
+		newLostItem.setName(name);
+		newLostItem.setLocationFound(locationFound);
+		newLostItem.setFound(false);
+		
+		lostItemRep.save(newLostItem);
+		
+		map.put("message", "Transaction successful! Your lost item has been posted.");
 		return map;
 	}
 	

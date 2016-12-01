@@ -22,4 +22,6 @@ public interface AccountRepository extends JpaRepository<Account, Long>
 //	List<Movie> findByGross();
 	
 	Account findByName(String name);
+	
+	Account findOne(Long id);
 }
