@@ -10,6 +10,10 @@ import javax.persistence.Id;
 public class SoldItem 
 {
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column
+	private Long id;
+	
 	@Column
 	private Long itemID;
 	
