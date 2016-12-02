@@ -1,5 +1,6 @@
 package app.rest2;
 
+import java.io.Console;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -34,6 +35,7 @@ import app.repositories.ItemRepository;
 import app.repositories.LostItemRepository;
 import app.repositories.ShoesRepository;
 import app.repositories.SoldItemRepository;
+import app.rest2.MovieRest.Reply;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -361,7 +363,8 @@ public class MovieRest {
 			newAccount.setPassword(password);
 			newAccount.setSex(sex);
 			accountRep.save(newAccount);
-			map.put("message", "Login successful!");
+			map.put("message", "Signup successful!");
+			
 		}
 		else {
 			map.put("message", "Account exists!");
@@ -375,33 +378,35 @@ public class MovieRest {
 	@Path("/login")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, Object> login(@QueryParam("idNumber") Long idNumber,
-										@QueryParam("password") String password) throws IOException
+	public Reply login(@QueryParam("idNumber") Long idNumber,
+					   @QueryParam("password") String password) throws IOException
 	{
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		//HashMap<String, Object> map = new HashMap<String, Object>();
 		
+		Reply reply = new Reply();
 		Account findAccount = new Account();
 		
-		findAccount = accountRep.findOne(idNumber);
+		findAccount = accountRep.findByIdNumber(idNumber);
 		
 		//find existing account
-		if (findAccount == null)
+		if (findAccount.equals(null))
 		{
-			map.put("message", "Account not found!");
+			reply.setMessage("Account not found!");
 		}
 		else {
 			if (findAccount.getPassword().equals(password)) {
-				map.put("message", "Login successful!");
-				map.put("login", true);
+				reply.setMessage("Login successful!");
+				System.out.println(findAccount.getIdNumber());
+				reply.setAccountName(findAccount.getName());
+				
 			}
 			else {
-				map.put("message", "Wrong password!");
-				map.put("login", false);
+				reply.setMessage("Wrong password!");
 			}
 		}
 		
 		
-		return map;
+		return reply;
 	}
 	
 	
@@ -614,19 +619,22 @@ public class MovieRest {
 		return map;
 	}
 	
-	
 	public class Reply {
-		Object title;
-
-		public Object getTitle() {
-			return title;
+		Object message;
+		Object accountName;
+		public Object getMessage() {
+			return message;
 		}
-		
-		Object gross;
-
-		public Object getGross() {
-			return gross;
+		public void setMessage(Object message) {
+			this.message = message;
+		}
+		public Object getAccountName() {
+			return accountName;
+		}
+		public void setAccountName(Object accountName) {
+			this.accountName = accountName;
 		}
 
 	}
+	
 }
