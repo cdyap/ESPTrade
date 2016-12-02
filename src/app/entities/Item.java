@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Item 
@@ -22,6 +24,18 @@ public class Item
 	
 	@Column
 	private Boolean sold;
+	
+	@ManyToOne
+	@JoinTable(name="idNumber")
+	private Account seller;
+
+	public Account getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Account seller) {
+		this.seller = seller;
+	}
 
 	public Long getId() {
 		return id;
