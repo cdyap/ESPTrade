@@ -23,8 +23,6 @@ public interface AccountRepository extends JpaRepository<Account, Long>
 	
 	Account findByName(String name);
 	
-	Account findOne(Long id);
-	
 //	@Modifying
 //	@Transactional
 //	@Query("delete from Account i where i.id = ?1")

@@ -246,11 +246,73 @@ public class MovieRest {
 		return map;
 	}
 	
+	
+	
+	
+	//buy
 	@POST
-	@Path("/buy")
+	@Path("/buyClothes")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, String> buy(@QueryParam("itemID") Long id,
+	public HashMap<String, String> buyClothes(@QueryParam("itemID") Long id,
+										@QueryParam("buyerID") Long buyerID,
+										@QueryParam("sellerID") Long sellerID) throws IOException
+	{
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		SoldItem soldItem = new SoldItem();
+		Clothes item = new Clothes();
+		
+		// update item sold status
+		item = clothesRep.findOne(id);
+		item.setSold(true);		
+		clothesRep.save(item);
+		
+		//save sold item so that buyers and sellers can be tracked
+		soldItem.setItemID(id);
+		soldItem.setBuyerID(buyerID);
+		soldItem.setSellerID(sellerID);
+		soldItem.setType("clothes");
+		soldItemRep.save(soldItem);
+		
+		map.put("message", "Transaction successful! You have bought " + item.getName() + ".");
+		return map;
+	}
+	
+	@POST
+	@Path("/buyShoes")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashMap<String, String> buyShoes(@QueryParam("itemID") Long id,
+										@QueryParam("buyerID") Long buyerID,
+										@QueryParam("sellerID") Long sellerID) throws IOException
+	{
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		SoldItem soldItem = new SoldItem();
+		Shoes item = new Shoes();
+		
+		// update item sold status
+		item = shoesRep.findOne(id);
+		item.setSold(true);		
+		shoesRep.save(item);
+		
+		//save sold item so that buyers and sellers can be tracked
+		soldItem.setItemID(id);
+		soldItem.setBuyerID(buyerID);
+		soldItem.setSellerID(sellerID);
+		soldItem.setType("shoes");
+		soldItemRep.save(soldItem);
+		
+		map.put("message", "Transaction successful! You have bought " + item.getName() + ".");
+		return map;
+	}
+	
+	@POST
+	@Path("/buyItem")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashMap<String, String> buyItem(@QueryParam("itemID") Long id,
 										@QueryParam("buyerID") Long buyerID,
 										@QueryParam("sellerID") Long sellerID) throws IOException
 	{
@@ -268,11 +330,14 @@ public class MovieRest {
 		soldItem.setItemID(id);
 		soldItem.setBuyerID(buyerID);
 		soldItem.setSellerID(sellerID);
+		soldItem.setType("item");
 		soldItemRep.save(soldItem);
 		
-		map.put("message", "Transaction successful! Your shoes have been posted.");
+		map.put("message", "Transaction successful! You have bought " + item.getName() + ".");
 		return map;
 	}
+	
+	
 	
 	@POST
 	@Path("/signup")
@@ -325,7 +390,7 @@ public class MovieRest {
 			map.put("message", "Account not found!");
 		}
 		else {
-			if (findAccount.getPassword() == password) {
+			if (findAccount.getPassword().equals(password)) {
 				map.put("message", "Login successful!");
 				map.put("login", true);
 			}
