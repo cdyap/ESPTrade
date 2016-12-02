@@ -18,16 +18,16 @@ public interface ClothesRepository extends JpaRepository<Clothes, Long>
 //	@Query("DELETE FROM Movie m WHERE m.title LIKE 'Harry Potter%'")
 //	void deleteByTitle();
 //	
-	@Query("SELECT m FROM Clothes m WHERE m.brand LIKE :name%")
+	@Query("SELECT m FROM Clothes m WHERE m.brand LIKE '?1%'")
 	List<Clothes> findByBrand(String name);
 	
-	@Query("SELECT m FROM Clothes m WHERE m.price <= :price%")
+	@Query("SELECT m FROM Clothes m WHERE m.price <= ?1")
 	List<Clothes> findByPrice(Double price);
 	
-	@Query("SELECT m FROM Clothes m WHERE m.size = :size%")
+	@Query("SELECT m FROM Clothes m WHERE m.size = ?1")
 	List<Clothes> findBySize(String size);
 	
-	@Query("SELECT m FROM Clothes m WHERE m.color = :color%")
+	@Query("SELECT m FROM Clothes m WHERE m.color = ?1")
 	List<Clothes> findByColor(String color);
 	
 	

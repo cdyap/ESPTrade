@@ -23,10 +23,10 @@ public interface ItemRepository extends JpaRepository<Item, Long>
 //	List<Movie> findByGross();
 	
 	
-	@Query("SELECT i FROM Item i WHERE i.name LIKE :name%")
+	@Query("SELECT i FROM Item i WHERE i.name LIKE '?1%'")
 	List<Item> findByName(String name);
 	
-	@Query("SELECT m FROM Item m WHERE m.price <= :price%")
+	@Query("SELECT m FROM Item m WHERE m.price <= ?1")
 	List<Item> findByPrice(Double price);
 	
 	@Modifying
