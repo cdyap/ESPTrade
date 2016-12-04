@@ -152,13 +152,13 @@ public class MovieRest {
 	@Path("/sellClothes")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, String> sellClothes(@QueryParam("name") String name,
+	public Reply sellClothes(@QueryParam("name") String name,
 										@QueryParam("brand") String brand,
 										@QueryParam("color") String color,
 										@QueryParam("size") String size,
 										@QueryParam("price") Double price) throws IOException
 	{
-		HashMap<String, String> map = new HashMap<String, String>();
+		//HashMap<String, String> map = new HashMap<String, String>();
 		
 		Clothes newClothes = new Clothes();
 		
@@ -171,8 +171,12 @@ public class MovieRest {
 		
 		clothesRep.save(newClothes);
 		
-		map.put("message", "Transaction successful! Your clothes have been posted.");
-		return map;
+		Reply r = new Reply();
+		
+		r.setMessage("Transaction successful! Your clothes have been posted");
+		
+		//map.put("message", "Transaction successful! Your clothes have been posted.");
+		return r;
 	}
 	
 	@POST
@@ -259,8 +263,8 @@ public class MovieRest {
 	public Reply buyClothes(@QueryParam("itemID") Long id,
 										@QueryParam("buyerID") Long buyerID) throws IOException
 	{
-		Reply r = new Reply();
-		
+
+		Reply r = new Reply();		
 		SoldItem soldItem = new SoldItem();
 		Clothes item = new Clothes();
 		
@@ -275,7 +279,10 @@ public class MovieRest {
 		soldItem.setType("clothes");
 		soldItemRep.save(soldItem);
 		
+		
+
 		r.setMessage("Transaction successful! You have bought " + item.getName() + ".");
+
 		return r;
 	}
 	
