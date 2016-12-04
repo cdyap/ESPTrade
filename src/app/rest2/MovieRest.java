@@ -256,11 +256,10 @@ public class MovieRest {
 	@Path("/buyClothes")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, String> buyClothes(@QueryParam("itemID") Long id,
-										@QueryParam("buyerID") Long buyerID,
-										@QueryParam("sellerID") Long sellerID) throws IOException
+	public Reply buyClothes(@QueryParam("itemID") Long id,
+										@QueryParam("buyerID") Long buyerID) throws IOException
 	{
-		HashMap<String, String> map = new HashMap<String, String>();
+		Reply r = new Reply();
 		
 		SoldItem soldItem = new SoldItem();
 		Clothes item = new Clothes();
@@ -273,23 +272,21 @@ public class MovieRest {
 		//save sold item so that buyers and sellers can be tracked
 		soldItem.setItemID(id);
 		soldItem.setBuyerID(buyerID);
-		soldItem.setSellerID(sellerID);
 		soldItem.setType("clothes");
 		soldItemRep.save(soldItem);
 		
-		map.put("message", "Transaction successful! You have bought " + item.getName() + ".");
-		return map;
+		r.setMessage("Transaction successful! You have bought " + item.getName() + ".");
+		return r;
 	}
 	
 	@POST
 	@Path("/buyShoes")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, String> buyShoes(@QueryParam("itemID") Long id,
-										@QueryParam("buyerID") Long buyerID,
-										@QueryParam("sellerID") Long sellerID) throws IOException
+	public Reply buyShoes(@QueryParam("itemID") Long id,
+										@QueryParam("buyerID") Long buyerID) throws IOException
 	{
-		HashMap<String, String> map = new HashMap<String, String>();
+		Reply r = new Reply();
 		
 		SoldItem soldItem = new SoldItem();
 		Shoes item = new Shoes();
@@ -302,23 +299,21 @@ public class MovieRest {
 		//save sold item so that buyers and sellers can be tracked
 		soldItem.setItemID(id);
 		soldItem.setBuyerID(buyerID);
-		soldItem.setSellerID(sellerID);
 		soldItem.setType("shoes");
 		soldItemRep.save(soldItem);
 		
-		map.put("message", "Transaction successful! You have bought " + item.getName() + ".");
-		return map;
+		r.setMessage("Transaction successful! You have bought " + item.getName() + ".");
+		return r;
 	}
 	
 	@POST
 	@Path("/buyItem")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, String> buyItem(@QueryParam("itemID") Long id,
-										@QueryParam("buyerID") Long buyerID,
-										@QueryParam("sellerID") Long sellerID) throws IOException
+	public Reply buyItem(@QueryParam("itemID") Long id,
+										@QueryParam("buyerID") Long buyerID) throws IOException
 	{
-		HashMap<String, String> map = new HashMap<String, String>();
+		Reply r = new Reply();
 		
 		SoldItem soldItem = new SoldItem();
 		Item item = new Item();
@@ -331,12 +326,11 @@ public class MovieRest {
 		//save sold item so that buyers and sellers can be tracked
 		soldItem.setItemID(id);
 		soldItem.setBuyerID(buyerID);
-		soldItem.setSellerID(sellerID);
 		soldItem.setType("item");
 		soldItemRep.save(soldItem);
 		
-		map.put("message", "Transaction successful! You have bought " + item.getName() + ".");
-		return map;
+		r.setMessage("Transaction successful! You have bought " + item.getName() + ".");
+		return r;
 	}
 	
 	
@@ -413,17 +407,57 @@ public class MovieRest {
 	
 	
 	
+	//List items
+	@GET
+	@Path("/listClothes")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Reply listClothes() throws IOException
+	{
+		Reply r = new Reply();
+		
+		List<Clothes> list = clothesRep.findBySold(false);
+		r.setMessage(list);
+		
+		return r;
+	}
+	
+	@GET
+	@Path("/listShoes")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Reply listShoes() throws IOException
+	{
+		Reply r = new Reply();
+		List<Shoes> list = shoesRep.findBySold(false);
+		r.setMessage(list);
+		return r;
+	}
+	
+	@GET
+	@Path("/listItems")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Reply listItems() throws IOException
+	{
+		Reply r = new Reply();
+		List<Item> list = itemRep.findBySold(false);
+		r.setMessage(list);
+		return r;
+	}
+	
+	
+	
+	
+	
 	
 	// Filter clothes
 	@GET
 	@Path("/findClothesbyBrand")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, Object> findClothesbyBrand(@QueryParam("brand") String brand) throws IOException
+	public Reply findClothesbyBrand(@QueryParam("brand") String brand) throws IOException
 	{
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Reply map = new Reply();
 		
-		map.put("list", clothesRep.findByBrand(brand));
+		map.setMessage(clothesRep.findByBrand(brand));
 			
 		return map;
 	}

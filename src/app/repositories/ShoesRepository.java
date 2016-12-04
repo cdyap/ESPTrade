@@ -29,10 +29,12 @@ public interface ShoesRepository extends JpaRepository<Shoes, Long>
 	List<Shoes> findByPrice(Double price);
 	
 	@Query("SELECT m FROM Shoes m WHERE m.size = ?1")
-	List<Clothes> findBySize(Integer size);
+	List<Shoes> findBySize(Integer size);
 	
 	@Query("SELECT m FROM Shoes m WHERE m.color = ?1")
-	List<Clothes> findByColor(String color);
+	List<Shoes> findByColor(String color);
+	
+	List<Shoes> findBySold(Boolean size);
 	
 	@Modifying
 	@Transactional

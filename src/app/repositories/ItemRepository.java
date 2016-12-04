@@ -29,6 +29,8 @@ public interface ItemRepository extends JpaRepository<Item, Long>
 	@Query("SELECT m FROM Item m WHERE m.price <= ?1")
 	List<Item> findByPrice(Double price);
 	
+	List<Item> findBySold(Boolean sold);
+	
 	@Modifying
 	@Transactional
 	@Query("delete from Item i where i.id = ?1")

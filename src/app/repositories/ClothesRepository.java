@@ -24,11 +24,11 @@ public interface ClothesRepository extends JpaRepository<Clothes, Long>
 	@Query("SELECT m FROM Clothes m WHERE m.price <= ?1")
 	List<Clothes> findByPrice(Double price);
 	
-	@Query("SELECT m FROM Clothes m WHERE m.size = ?1")
 	List<Clothes> findBySize(String size);
 	
-	@Query("SELECT m FROM Clothes m WHERE m.color = ?1")
 	List<Clothes> findByColor(String color);
+	
+	List<Clothes> findBySold(Boolean sold);
 	
 	
 	@Modifying
