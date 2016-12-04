@@ -473,39 +473,39 @@ public class MovieRest {
 	@Path("/findClothesbyPrice")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, Object> findClothesbyPrice(@QueryParam("price") Double price) throws IOException
+	public Reply findClothesbyPrice(@QueryParam("price") Double price) throws IOException
 	{
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Reply r = new Reply();
 		
-		map.put("list", clothesRep.findByPrice(price));
+		r.setMessage(clothesRep.findByPrice(price));
 			
-		return map;
+		return r;
 	}
 	
 	@GET
 	@Path("/findClothesbySize")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, Object> findClothesbySize(@QueryParam("size") String size) throws IOException
+	public Reply findClothesbySize(@QueryParam("size") String size) throws IOException
 	{
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Reply r = new Reply();
 		
-		map.put("list", clothesRep.findBySize(size));
+		r.setMessage(clothesRep.findBySize(size));
 			
-		return map;
+		return r;
 	}
 	
 	@GET
 	@Path("/findClothesbyColor")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, Object> findClothesbyColor(@QueryParam("color") String color) throws IOException
+	public Reply findClothesbyColor(@QueryParam("color") String color) throws IOException
 	{
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Reply r = new Reply();
 		
-		map.put("list", clothesRep.findByColor(color));
+		r.setMessage(clothesRep.findByColor(color));
 			
-		return map;
+		return r;
 	}
 	
 	
@@ -518,52 +518,52 @@ public class MovieRest {
 	@Path("/findShoesbyBrand")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, Object> findShoesbyBrand(@QueryParam("brand") String brand) throws IOException
+	public Reply findShoesbyBrand(@QueryParam("brand") String brand) throws IOException
 	{
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Reply r = new Reply();
 
-		map.put("list", shoesRep.findByBrand(brand));
+		r.setMessage(shoesRep.findByBrand(brand));
 
-		return map;
+		return r;
 	}
 
 	@GET
 	@Path("/findShoesbyPrice")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, Object> findShoesbyPrice(@QueryParam("price") Double price) throws IOException
+	public Reply findShoesbyPrice(@QueryParam("price") Double price) throws IOException
 	{
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Reply r = new Reply();
 
-		map.put("list", shoesRep.findByPrice(price));
+		r.setMessage(shoesRep.findByPrice(price));
 
-		return map;
+		return r;
 	}
 
 	@GET
 	@Path("/findShoesbySize")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, Object> findShoesbySize(@QueryParam("size") Integer size) throws IOException
+	public Reply findShoesbySize(@QueryParam("size") Integer size) throws IOException
 	{
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Reply r = new Reply();
 
-		map.put("list", shoesRep.findBySize(size));
+		r.setMessage(shoesRep.findBySize(size));
 
-		return map;
+		return r;
 	}
 
 	@GET
 	@Path("/findShoesbyColor")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, Object> findShoesbyColor(@QueryParam("color") String color) throws IOException
+	public Reply findShoesbyColor(@QueryParam("color") String color) throws IOException
 	{
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Reply r = new Reply();
 
-		map.put("list", shoesRep.findByColor(color));
+		r.setMessage(shoesRep.findByColor(color));
 
-		return map;
+		return r;
 	}
 
 

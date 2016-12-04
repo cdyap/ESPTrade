@@ -22,7 +22,7 @@ public interface ShoesRepository extends JpaRepository<Shoes, Long>
 //	@Query("SELECT m FROM Movie m ORDER BY m.gross DESC LIMIT 10")
 //	List<Movie> findByGross();
 	
-	@Query("SELECT m FROM Shoes m WHERE m.brand LIKE '?1%'")
+	@Query("SELECT m FROM Shoes m WHERE m.brand LIKE CONCAT(?1, '%')")
 	List<Shoes> findByBrand(String brand);
 	
 	@Query("SELECT m FROM Shoes m WHERE m.price <= ?1")

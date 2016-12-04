@@ -18,7 +18,7 @@ public interface ClothesRepository extends JpaRepository<Clothes, Long>
 //	@Query("DELETE FROM Movie m WHERE m.title LIKE 'Harry Potter%'")
 //	void deleteByTitle();
 //	
-	@Query("SELECT m FROM Clothes m WHERE m.brand LIKE '?1%'")
+	@Query("SELECT m FROM Clothes m WHERE m.brand LIKE CONCAT(?1, '%')")
 	List<Clothes> findByBrand(String name);
 	
 	@Query("SELECT m FROM Clothes m WHERE m.price <= ?1")
