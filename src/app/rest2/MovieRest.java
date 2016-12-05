@@ -132,16 +132,20 @@ public class MovieRest {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public HashMap<String, String> sellItem(@QueryParam("name") String name,
-										@QueryParam("price") Double price) throws IOException
+										@QueryParam("price") Double price,
+										@QueryParam("sellerID") Long id) throws IOException
 	{
 		HashMap<String, String> map = new HashMap<String, String>();
+		Account seller = new Account();
+		
+		seller = accountRep.findOne(id);
 		
 		Item newItem = new Item();
 		
 		newItem.setName(name);
 		newItem.setPrice(price);
 		newItem.setSold(false);
-		
+		newItem.setSeller(seller);
 		itemRep.save(newItem);
 		
 		map.put("message", "Transaction successful! Your item has been posted.");
@@ -156,11 +160,15 @@ public class MovieRest {
 										@QueryParam("brand") String brand,
 										@QueryParam("color") String color,
 										@QueryParam("size") String size,
-										@QueryParam("price") Double price) throws IOException
+										@QueryParam("price") Double price,
+										@QueryParam("sellerID") Long id) throws IOException
 	{
 		//HashMap<String, String> map = new HashMap<String, String>();
 		
 		Clothes newClothes = new Clothes();
+		Account seller = new Account();
+		
+		seller = accountRep.findOne(id);
 		
 		newClothes.setName(name);
 		newClothes.setPrice(price);
@@ -168,7 +176,7 @@ public class MovieRest {
 		newClothes.setColor(color);
 		newClothes.setSize(size);
 		newClothes.setSold(false);
-		
+		newClothes.setSeller(seller);
 		clothesRep.save(newClothes);
 		
 		Reply r = new Reply();
@@ -187,11 +195,17 @@ public class MovieRest {
 										@QueryParam("brand") String brand,
 										@QueryParam("color") String color,
 										@QueryParam("size") Integer size,
-										@QueryParam("price") Double price) throws IOException
+										@QueryParam("price") Double price,
+										@QueryParam("sellerID") Long id) throws IOException
 	{
 		HashMap<String, String> map = new HashMap<String, String>();
 		
 		Shoes newShoes = new Shoes();
+		
+		Account seller = new Account();
+		
+		seller = accountRep.findOne(id);
+		
 		
 		newShoes.setName(name);
 		newShoes.setPrice(price);
@@ -199,7 +213,7 @@ public class MovieRest {
 		newShoes.setColor(color);
 		newShoes.setSize(size);
 		newShoes.setSold(false);
-		
+		newShoes.setSeller(seller);
 		shoesRep.save(newShoes);
 		
 		map.put("message", "Transaction successful! Your shoes have been posted.");
