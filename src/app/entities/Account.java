@@ -21,6 +21,17 @@ public class Account
 	
 	@Column
 	private String password;
+	
+	@Column
+	private Double cellphone;
+
+	public Double getCellphone() {
+		return cellphone;
+	}
+
+	public void setCellphone(Double cellphone) {
+		this.cellphone = cellphone;
+	}
 
 	public String getPassword() {
 		return password;
