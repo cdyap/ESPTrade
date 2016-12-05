@@ -68,15 +68,10 @@ public class MovieRest {
 	@Autowired
 	private SoldItemRepository soldItemRep;
 
-	
-	@GET
-	@Path("/text")
-	@Produces(MediaType.APPLICATION_JSON)
-	public HashMap<String, Object> text(@QueryParam("message")String params) throws IOException
+
+	public void text(String params, String number) throws IOException
 	{
-		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("message", params);
 		
 		try{
 			Gson gson = new GsonBuilder().create();
@@ -103,15 +98,17 @@ public class MovieRest {
 			String message_id = String.valueOf(UUID.randomUUID()).replaceAll("-","");
 			
 			String message_sent = params;
-			
-			Call<Reply> sendToChikka = service.sendChikka("SEND", "639177777428", "29290091", message_id, message_sent, "b2418ebf7f826869fc8626dcee056e7d0845ad2cb5b76e9de87f9d9038049262",  "860326f64656b1901624f3147b11c76ab43d508a52af3467775e1794b463e112");
+			//29290091
+			//292901782
+			System.out.println(number.toString());
+			//Call<Reply> sendToChikka = service.sendChikka("SEND", number.toString(), "29290091", message_id, message_sent, "b2418ebf7f826869fc8626dcee056e7d0845ad2cb5b76e9de87f9d9038049262",  "860326f64656b1901624f3147b11c76ab43d508a52af3467775e1794b463e112");
+			Call<Reply> sendToChikka = service.sendChikka("SEND", number, "292901782", message_id, message_sent, "3fa6977cacb5be50089f40a8049b77dc732b41aa076c04e29782f7ce55cadf4c",  "d8ec96a83b9c9ee26133d5fb4f387bd1afad30e183045557ff81e685d2a2382d");
 			
 			Response<Reply> response = sendToChikka.execute();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return map;
 	}
 	
 	private interface JDICTService
@@ -136,16 +133,14 @@ public class MovieRest {
 										@QueryParam("sellerID") Long id) throws IOException
 	{
 		HashMap<String, String> map = new HashMap<String, String>();
-		Account seller = new Account();
-		
-		seller = accountRep.findOne(id);
+
 		
 		Item newItem = new Item();
 		
 		newItem.setName(name);
 		newItem.setPrice(price);
 		newItem.setSold(false);
-		newItem.setSeller(seller);
+		newItem.setSeller(id);
 		itemRep.save(newItem);
 		
 		map.put("message", "Transaction successful! Your item has been posted.");
@@ -166,9 +161,6 @@ public class MovieRest {
 		//HashMap<String, String> map = new HashMap<String, String>();
 		
 		Clothes newClothes = new Clothes();
-		Account seller = new Account();
-		
-		seller = accountRep.findOne(id);
 		
 		newClothes.setName(name);
 		newClothes.setPrice(price);
@@ -176,7 +168,7 @@ public class MovieRest {
 		newClothes.setColor(color);
 		newClothes.setSize(size);
 		newClothes.setSold(false);
-		newClothes.setSeller(seller);
+		newClothes.setSeller(id);
 		clothesRep.save(newClothes);
 		
 		Reply r = new Reply();
@@ -202,18 +194,13 @@ public class MovieRest {
 		
 		Shoes newShoes = new Shoes();
 		
-		Account seller = new Account();
-		
-		seller = accountRep.findOne(id);
-		
-		
 		newShoes.setName(name);
 		newShoes.setPrice(price);
 		newShoes.setBrand(brand);
 		newShoes.setColor(color);
 		newShoes.setSize(size);
 		newShoes.setSold(false);
-		newShoes.setSeller(seller);
+		newShoes.setSeller(id);
 		shoesRep.save(newShoes);
 		
 		map.put("message", "Transaction successful! Your shoes have been posted.");
@@ -294,6 +281,8 @@ public class MovieRest {
 		soldItemRep.save(soldItem);
 		
 		
+		text("Your clothes have been sold! Text " + accountRep.findOne(buyerID).getCellphone() + "to meet up.", accountRep.findOne(item.getSeller()).getCellphone());
+		
 
 		r.setMessage("Transaction successful! You have bought " + item.getName() + ".");
 
@@ -323,6 +312,8 @@ public class MovieRest {
 		soldItem.setType("shoes");
 		soldItemRep.save(soldItem);
 		
+		text("Your shoes have been sold! Text " + accountRep.findOne(buyerID).getCellphone().toString() + "to meet up.", accountRep.findOne(item.getSeller()).getCellphone());
+		
 		r.setMessage("Transaction successful! You have bought " + item.getName() + ".");
 		return r;
 	}
@@ -350,6 +341,9 @@ public class MovieRest {
 		soldItem.setType("item");
 		soldItemRep.save(soldItem);
 		
+		
+		text("Your item has been sold! Text " + accountRep.findOne(buyerID).getCellphone().toString() + "to meet up.", accountRep.findOne(item.getSeller()).getCellphone());
+		
 		r.setMessage("Transaction successful! You have bought " + item.getName() + ".");
 		return r;
 	}
@@ -364,7 +358,7 @@ public class MovieRest {
 										@QueryParam("name") String name,
 										@QueryParam("password") String password,
 										@QueryParam("sex") String sex,
-										@QueryParam("cellphone") Double cellphone) throws IOException
+										@QueryParam("cellphone") String cellphone) throws IOException
 	{
 		HashMap<String, String> map = new HashMap<String, String>();
 		

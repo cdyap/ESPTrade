@@ -25,15 +25,14 @@ public class Clothes
 	@Column
 	private Boolean sold;
 	
-	@ManyToOne
-	@JoinTable(name="idNumber")
-	private Account seller;
+	@Column
+	private Long seller;
 
-	public Account getSeller() {
+	public Long getSeller() {
 		return seller;
 	}
 
-	public void setSeller(Account seller) {
+	public void setSeller(Long seller) {
 		this.seller = seller;
 	}
 

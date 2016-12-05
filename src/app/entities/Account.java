@@ -23,13 +23,13 @@ public class Account
 	private String password;
 	
 	@Column
-	private Double cellphone;
+	private String cellphone;
 
-	public Double getCellphone() {
+	public String getCellphone() {
 		return cellphone;
 	}
 
-	public void setCellphone(Double cellphone) {
+	public void setCellphone(String cellphone) {
 		this.cellphone = cellphone;
 	}
 
