@@ -349,7 +349,8 @@ public class MovieRest {
 	public HashMap<String, String> signup(@QueryParam("idNumber") Long idNumber,
 										@QueryParam("name") String name,
 										@QueryParam("password") String password,
-										@QueryParam("sex") String sex) throws IOException
+										@QueryParam("sex") String sex,
+										@QueryParam("cellphone") Double cellphone) throws IOException
 	{
 		HashMap<String, String> map = new HashMap<String, String>();
 		
@@ -363,6 +364,7 @@ public class MovieRest {
 			newAccount.setName(name);
 			newAccount.setPassword(password);
 			newAccount.setSex(sex);
+			newAccount.setCellphone(cellphone);
 			accountRep.save(newAccount);
 			map.put("message", "Signup successful!");
 			
